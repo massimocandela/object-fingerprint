@@ -1,0 +1,88 @@
+{
+  "name": "object-fingerprint",
+  "version": "1.0.0",
+  "description": "Simple and fast utility to create short, stable, and deterministic object fingerprints (object hash).",
+  "main": "dist/index.js",
+  "bin": "dist/index.js",
+  "scripts": {
+    "babel": "node_modules/.bin/babel",
+    "compile": "rm -rf dist/ && mkdir -p dist/compiled && ./node_modules/.bin/babel src -d dist/compiled",
+    "release": "dotenv release-it"
+  },
+  "author": {
+    "name": "Massimo Candela",
+    "url": "https://massimocandela.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/massimocandela/object-fingerprint"
+  },
+  "keywords": [
+    "object",
+    "hash",
+    "fingerprint"
+  ],
+  "release-it": {
+    "hooks": {
+      "before:init": [
+        "npm ci"
+      ],
+      "after:bump": [
+        "npm run build"
+      ],
+      "after:release": [
+        "echo Successfully released ${name} v${version} to ${repo.repository}.",
+        "rm -r dist/"
+      ]
+    },
+    "git": {
+      "changelog": "git log --pretty=format:\"* %s (%h)\" ${from}...${to}",
+      "requireCleanWorkingDir": true,
+      "requireBranch": "main",
+      "requireUpstream": true,
+      "requireCommits": false,
+      "addUntrackedFiles": false,
+      "commit": true,
+      "commitMessage": "Release v${version}",
+      "commitArgs": [],
+      "tag": true,
+      "tagName": null,
+      "tagAnnotation": "Release v${version}",
+      "tagArgs": [],
+      "push": true,
+      "pushArgs": [
+        "--follow-tags"
+      ],
+      "pushRepo": ""
+    },
+    "gitlab": {
+      "release": false
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true,
+      "releaseName": "v${version}",
+      "tokenRef": "GITHUB_TOKEN",
+      "origin": null,
+      "skipChecks": false
+    }
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.23.0",
+    "@babel/core": "^7.23.2",
+    "@babel/node": "^7.22.19",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
+    "@babel/plugin-transform-async-to-generator": "^7.22.5",
+    "@babel/plugin-transform-runtime": "^7.23.2",
+    "@babel/preset-env": "^7.23.2"
+  },
+  "dependencies": {
+    "crc-32": "^1.2.2",
+    "moment": "^2.29.4"
+  },
+  "resolutions": {}
+}
