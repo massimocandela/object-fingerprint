@@ -29,7 +29,7 @@
         "npm ci"
       ],
       "after:bump": [
-        "npm run build"
+        "npm run compile"
       ],
       "after:release": [
         "echo Successfully released ${name} v${version} to ${repo.repository}.",
@@ -78,7 +78,8 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/plugin-transform-async-to-generator": "^7.22.5",
     "@babel/plugin-transform-runtime": "^7.23.2",
-    "@babel/preset-env": "^7.23.2"
+    "@babel/preset-env": "^7.23.2",
+    "release-it": "^16.2.1"
   },
   "dependencies": {
     "crc-32": "^1.2.2",
