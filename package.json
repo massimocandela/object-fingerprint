@@ -6,7 +6,7 @@
   "bin": "dist/index.js",
   "scripts": {
     "babel": "node_modules/.bin/babel",
-    "compile": "rm -rf dist/ && mkdir -p dist/compiled && ./node_modules/.bin/babel src -d dist/compiled",
+    "compile": "rm -rf dist/ && mkdir -p dist/ && ./node_modules/.bin/babel src -d dist/",
     "release": "dotenv release-it"
   },
   "author": {

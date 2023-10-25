@@ -56,12 +56,12 @@ const getObjectFingerprint = (value) => {
     let buff = "";
 
     for (let key of sortedKeys) {
-        buff += `${key}<${fingerprint(value[key])}>`;
+        buff += `${key}<${index(value[key])}>`;
     }
 
     return buff;
 };
 
-export default function fingerprint(object) {
+export default function index(object) {
     return CRC32.str(_getFingerprint(object)).toString(16);
 }
