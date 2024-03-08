@@ -25,7 +25,7 @@
 import moment from "moment";
 import CRC32 from 'crc-32';
 
-const _getFingerprint = (object) => {
+const _getFingerprint = (object, algorithm) => {
 
     switch(typeof(object)) {
         case "object":
@@ -35,8 +35,10 @@ const _getFingerprint = (object) => {
                 return `m:${object.toISOString()}`;
             } else if (object instanceof Date) {
                 return `m:${moment(object).toISOString()}`;
+            } else if (Array.isArray(object)) {
+                return `a:[${object.map(i => getObjectFingerprint(i, algorithm))}]`;
             } else {
-                return `o:${getObjectFingerprint(object)}`;
+                return `o:${getObjectFingerprint(object, algorithm)}`;
             }
         case "boolean":
             return `b:${object?"t":"f"}`;
@@ -51,17 +53,21 @@ const _getFingerprint = (object) => {
     }
 };
 
-const getObjectFingerprint = (value) => {
+const getObjectFingerprint = (value, algorithm) => {
     const sortedKeys = Object.keys(value).sort();
     let buff = "";
 
     for (let key of sortedKeys) {
-        buff += `${key}<${index(value[key])}>`;
+        buff += `${key}<${index(value[key], algorithm)}>`;
     }
 
     return buff;
 };
 
-export default function index(object) {
-    return CRC32.str(_getFingerprint(object)).toString(16);
+export default function index(object, algorithm) {
+    if (algorithm) {
+        return algorithm(_getFingerprint(object, algorithm));
+    } else {
+        return CRC32.str(_getFingerprint(object)).toString(16);
+    }
 }
