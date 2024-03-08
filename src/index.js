@@ -54,14 +54,18 @@ const _getFingerprint = (object, algorithm) => {
 };
 
 const getObjectFingerprint = (value, algorithm) => {
-    const sortedKeys = Object.keys(value).sort();
-    let buff = "";
+    try {
+        const sortedKeys = Object.keys(value).sort();
+        let buff = "";
 
-    for (let key of sortedKeys) {
-        buff += `${key}<${index(value[key], algorithm)}>`;
+        for (let key of sortedKeys) {
+            buff += `${key}<${index(value[key], algorithm)}>`;
+        }
+
+        return buff;
+    } catch (e) {
+        return "nn";
     }
-
-    return buff;
 };
 
 export default function index(object, algorithm) {
