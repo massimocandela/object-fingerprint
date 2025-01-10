@@ -23,11 +23,11 @@
  */
 
 import moment from "moment";
-import CRC32 from 'crc-32';
+import CRC32 from "crc-32";
 
 const _getFingerprint = (object, algorithm) => {
 
-    switch(typeof(object)) {
+    switch (typeof (object)) {
         case "object":
             if (object == null) {
                 return "o:null";
@@ -41,7 +41,7 @@ const _getFingerprint = (object, algorithm) => {
                 return `o:${getObjectFingerprint(object, algorithm)}`;
             }
         case "boolean":
-            return `b:${object?"t":"f"}`;
+            return `b:${object ? "t" : "f"}`;
         case "function":
             throw new Error("You cannot pass a function as data item");
         case "number":
@@ -55,14 +55,18 @@ const _getFingerprint = (object, algorithm) => {
 
 const getObjectFingerprint = (value, algorithm) => {
     try {
-        const sortedKeys = Object.keys(value).sort();
-        let buff = "";
+        if (typeof (value) === "object") {
+            const sortedKeys = Object.keys(value).sort();
+            let buff = "";
 
-        for (let key of sortedKeys) {
-            buff += `${key}<${index(value[key], algorithm)}>`;
+            for (let key of sortedKeys) {
+                buff += `${key}<${index(value[key], algorithm)}>`;
+            }
+
+            return buff;
+        } else {
+            return JSON.parse(value);
         }
-
-        return buff;
     } catch (e) {
         return "nn";
     }
