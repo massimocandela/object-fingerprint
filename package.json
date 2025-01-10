@@ -1,6 +1,6 @@
 {
   "name": "object-fingerprint",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Simple and fast utility to create short, stable, and deterministic object fingerprints (object hash).",
   "main": "dist/index.js",
   "bin": "dist/index.js",
