@@ -60,7 +60,11 @@ const getObjectFingerprint = (value, algorithm) => {
             let buff = "";
 
             for (let key of sortedKeys) {
-                buff += `${key}<${index(value[key], algorithm)}>`;
+                try {
+                    buff += `${key}<${index(value[key], algorithm)}>`;
+                } catch (error) {
+                    buff += `${key}<nn>`;
+                }
             }
 
             return buff;
@@ -79,7 +83,3 @@ export default function index(object, algorithm) {
         return CRC32.str(_getFingerprint(object)).toString(16);
     }
 }
-
-
-console.log(index({"history": () => {return 1;}, "match": {"params": {"*": "wizard/1/", "step": "1"}}, "queryString": {}}));
-console.log(index({"history": () => {}, "match": {"params": {"*": "wizard/2/", "step": "2"}}, "queryString": {}}));
