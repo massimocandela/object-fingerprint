@@ -43,7 +43,7 @@ const _getFingerprint = (object, algorithm) => {
         case "boolean":
             return `b:${object ? "t" : "f"}`;
         case "function":
-            throw new Error("You cannot pass a function as data item");
+            return `f:${CRC32.str(object.toString(16))}`;
         case "number":
             return `n:${object.toString()}`;
         case "string":
@@ -79,3 +79,7 @@ export default function index(object, algorithm) {
         return CRC32.str(_getFingerprint(object)).toString(16);
     }
 }
+
+
+console.log(index({"history": () => {return 1;}, "match": {"params": {"*": "wizard/1/", "step": "1"}}, "queryString": {}}));
+console.log(index({"history": () => {}, "match": {"params": {"*": "wizard/2/", "step": "2"}}, "queryString": {}}));
